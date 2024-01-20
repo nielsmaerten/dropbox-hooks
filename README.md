@@ -58,7 +58,7 @@ To containerize the application, ensuring it can run in any environment that sup
    After building the image, start a container from the image:
 
    ```bash
-   docker run -p 3000:3000 my-dropbox-webhooks
+   docker run -p 3000:3000 -e DROPBOX_APP_SECRET=your_dropbox_app_secret -e DROPBOX_ACCESS_TOKEN=your_dropbox_access_token my-dropbox-webhooks
    ```
 
    This will start the application inside a Docker container, listening on port 3000.
