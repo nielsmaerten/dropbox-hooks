@@ -7,21 +7,17 @@ export default function validateSignature(
   next: NextFunction,
 ) {
   const signature = req.headers["x-dropbox-signature"];
-  if (!signature) {
-    return res.status(400).send("No signature header found on request");
-  }
-  const requestBody = JSON.stringify(req.body);
 
-  const hmac = crypto.createHmac(
-    "sha256",
-    process.env.DROPBOX_APP_SECRET as string,
-  );
-  hmac.update(requestBody, "utf8");
-  const digest = hmac.digest("hex");
+  const expectedSignature = crypto
+    .createHmac("sha256", process.env.DROPBOX_APP_SECRET as string)
+    .update(req.rawBody || "", "utf8")
+    .digest("hex");
 
-  if (signature !== digest) {
-    return res.status(403).send("Signature mismatch");
+  if (!signature || signature !== expectedSignature) {
+    console.error("Invalid signature. Potential tampering detected.");
+    return res.status(403).send("Invalid request signature.");
   }
 
+  console.log("Valid webhook received from Dropbox:", req.body);
   next();
 }
