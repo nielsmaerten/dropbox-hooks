@@ -15,10 +15,10 @@ A Node.js application designed to run custom code in response to events from Dro
 ### Setting Up Your Environment
 
 1. **Install Dependencies**
-   Navigate to the project directory and install the required npm packages:
+   Navigate to the project directory and install the required npm packages. Update the .env file with your own Dropbox App Secret and Access Token. These can be found in the Dropbox App Console.
 
    ```bash
-   yarn install
+   yarn install && cp .env.example .env
    ```
 
 2. **Start the Development Server**
