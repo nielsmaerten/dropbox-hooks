@@ -17,7 +17,5 @@ export default function validateSignature(
     console.error("Invalid signature. Potential tampering detected.");
     return res.status(403).send("Invalid request signature.");
   }
-
-  console.log("Valid webhook received from Dropbox:", req.body);
   next();
 }
